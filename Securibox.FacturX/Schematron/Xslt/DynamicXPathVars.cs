@@ -13,7 +13,8 @@
 
         public static object BuildDynamicProps(Dictionary<XmlQualifiedName, object> lets)
         {
-            ArgumentNullException.ThrowIfNull(lets, nameof(lets));
+            if (lets == null)
+                throw new ArgumentNullException();
             if (lets.Count == 0)
             {
                 return new object();
@@ -65,7 +66,7 @@
             var sortedProps = lets.OrderBy(kv => kv.Key.ToString())
                                  .Select(kv => $"{kv.Key}:{(kv.Value?.GetType().FullName ?? "object")}");
 
-            return string.Join('|', sortedProps);
+            return string.Join("|", sortedProps);
         }
 
         private static TypeBuilder CreateTypeBuilder(string typeName)

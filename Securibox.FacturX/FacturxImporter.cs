@@ -197,7 +197,8 @@ namespace Securibox.FacturX
                 byte[] metadataBytes = new byte[0];
                 if (dict?.Stream == null)
                 {
-                    ArgumentNullException.ThrowIfNull(_pdfFileStream);
+                    if (_pdfFileStream == null)
+                        throw new ArgumentNullException();
 
                     _pdfFileStream.Position = 0;
                     var pdfText = Encoding.UTF8.GetString(_pdfFileStream.ToArray());
